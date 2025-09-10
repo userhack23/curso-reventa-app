@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Reventa: De China a Vinted</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Subtle Action -->
+    <!-- Application Structure Plan: Se ha diseñado una aplicación de una sola página con desplazamiento vertical. La estructura guía al usuario a través de un embudo de ventas narrativo: 1. Conexión emocional (Hook). 2. Identificación del problema (Puntos de dolor). 3. Presentación de la solución (Módulos del curso interactivos). 4. Demostración del valor único (Simulador del Bot de IA). 5. Visualización del éxito (Calculadora de ganancias). 6. Prueba social (Testimonios). 7. Llamada a la acción final. Esta estructura se eligió para transformar una página de ventas pasiva en una experiencia de descubrimiento activa, aumentando el compromiso y la conversión al hacer que los beneficios se sientan tangibles e interactivos. -->
+    <!-- Visualization & Content Choices: Módulos del curso -> Objetivo: Organizar -> Método: Acordeón HTML/JS -> Interacción: Clic para expandir, fomentando la exploración del contenido. Bot Exclusivo -> Objetivo: Demostrar/Wow -> Método: Interfaz de chat simulada con JS -> Interacción: Clic en botones para ver respuestas "escritas" por el bot, haciendo tangible su utilidad. Potencial de Ganancias -> Objetivo: Comparar/Cambiar -> Método: Inputs HTML + Gráfico de barras con Chart.js -> Interacción: El usuario introduce datos y el gráfico se actualiza en tiempo real, personalizando la promesa de ganancias. Testimonios -> Objetivo: Informar/Validar -> Método: Tarjetas estáticas bien diseñadas para una lectura clara. Esta combinación de elementos interactivos y estáticos guía al usuario de manera efectiva sin abrumarlo. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        .cta-button {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .module-header:hover {
+            background-color: #f0f0f0;
+        }
+        .bot-typing::after {
+            content: '▋';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-gray-800 smooth-scroll">
+
+    <!-- Hero Section -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-orange-600">Método 100€/Día</h1>
+            <a href="#cta" class="cta-button bg-orange-600 text-white font-bold py-2 px-5 rounded-lg text-sm">
+                Inscríbete Ahora
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-20">
+
+        <!-- Hook Section -->
+        <section class="text-center max-w-4xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Genera <span class="text-orange-600">100€ de Beneficio Neto</span> al Día Revendiendo en Vinted.</h2>
+            <p class="text-lg text-gray-600 mb-8">Vi los mismos vídeos en TikTok que tú y pensé que era una estafa. Pero me obsesioné, perfeccioné mi propio sistema y ahora gano dinero mientras duermo. Esto no es solo un curso; es la llave a un negocio real y te la entrego sin secretos.</p>
+            <a href="#cta" class="cta-button inline-block bg-orange-600 text-white font-bold py-4 px-10 rounded-lg text-xl">
+                Quiero Empezar Ahora
+            </a>
+        </section>
+
+        <!-- Pain Points Section -->
+        <section class="py-16 md:py-24">
+            <div class="text-center max-w-3xl mx-auto">
+                <h3 class="text-3xl font-bold mb-4">¿Te sientes identificado?</h3>
+                <p class="text-gray-600 mb-10">Si has asentido con la cabeza a alguno de estos puntos, no estás solo. Yo también estuve ahí, y por eso he creado la solución definitiva.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <div class="text-3xl mb-3">🤔</div>
+                    <h4 class="font-bold text-lg mb-2">No sabes por dónde empezar</h4>
+                    <p class="text-gray-600 text-sm">Quieres un ingreso extra, pero la cantidad de información te paraliza.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <div class="text-3xl mb-3">📉</div>
+                    <h4 class="font-bold text-lg mb-2">Tus ventas no despegan</h4>
+                    <p class="text-gray-600 text-sm">Has intentado vender online, pero los beneficios son mínimos o inexistentes.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <div class="text-3xl mb-3">🚚</div>
+                    <h4 class="font-bold text-lg mb-2">Miedo a los proveedores</h4>
+                    <p class="text-gray-600 text-sm">Te sientes perdido buscando gente fiable y no sabes cómo negociar.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <div class="text-3xl mb-3">📦</div>
+                    <h4 class="font-bold text-lg mb-2">Tus productos no se venden</h4>
+                    <p class="text-gray-600 text-sm">No entiendes por qué tus artículos no destacan y se venden rápido en Vinted.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Method / Course Modules -->
+        <section id="curso" class="py-16 md:py-24 bg-white rounded-2xl shadow-lg">
+             <div class="text-center max-w-3xl mx-auto mb-12">
+                <h3 class="text-3xl font-bold mb-4">El Mapa Exacto Hacia Tu Libertad Financiera</h3>
+                <p class="text-gray-600">He diseñado este curso para llevarte de la mano en cada paso. Olvídate de adivinar. Haz clic en cada módulo para descubrir el contenido que transformará tus finanzas.</p>
+            </div>
+            <div id="modules-container" class="max-w-3xl mx-auto space-y-4">
+                <!-- Modules will be injected here by JS -->
+            </div>
+        </section>
+
+        <!-- AI Bot Demo Section -->
+        <section class="py-16 md:py-24">
+             <div class="text-center max-w-3xl mx-auto mb-12">
+                <h3 class="text-3xl font-bold mb-4">Tu Arma Secreta: El Asistente de IA Exclusivo</h3>
+                <p class="text-gray-600">Dentro de la formación, tendrás acceso a un bot que he entrenado con mis estrategias. Será tu mano derecha. Pruébalo tú mismo y mira lo que puede hacer por ti.</p>
+            </div>
+            <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-200">
+                <div class="bg-gray-900 rounded-t-lg p-3 flex items-center">
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <p class="text-center text-sm text-gray-400 flex-grow">Asistente de Reventa IA</p>
+                </div>
+                <div class="bg-gray-800 p-6 h-64 overflow-y-auto">
+                    <p id="bot-response" class="text-white font-mono whitespace-pre-wrap"></p>
+                </div>
+                <div class="p-4 bg-gray-100 rounded-b-lg">
+                    <p class="text-sm font-semibold mb-3 text-gray-700">¿Qué necesitas?</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="runBotCommand('description')" class="flex-grow bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold py-2 px-4 rounded-lg transition">Generar Descripción</button>
+                        <button onclick="runBotCommand('market')" class="flex-grow bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold py-2 px-4 rounded-lg transition">Analizar Nicho</button>
+                        <button onclick="runBotCommand('profit')" class="flex-grow bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-2 px-4 rounded-lg transition">Calcular Rentabilidad</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profit Calculator Section -->
+        <section class="py-16 md:py-24 bg-white rounded-2xl shadow-lg">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h3 class="text-3xl font-bold mb-4">Visualiza Tu Potencial de Ganancias</h3>
+                <p class="text-gray-600">La meta de 100€ al día es más alcanzable de lo que crees. Introduce el coste y precio de venta de un producto hipotético y mira cómo crecen tus números. Asumimos una media de 5 ventas al día para empezar.</p>
+            </div>
+            <div class="max-w-5xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+                <div class="space-y-6 p-6">
+                    <div>
+                        <label for="costo" class="block text-sm font-medium text-gray-700 mb-1">Coste del producto por unidad (€)</label>
+                        <input type="number" id="costo" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" placeholder="Ej: 5">
+                    </div>
+                    <div>
+                        <label for="venta" class="block text-sm font-medium text-gray-700 mb-1">Precio de venta en Vinted (€)</label>
+                        <input type="number" id="venta" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm" placeholder="Ej: 25">
+                    </div>
+                    <button id="calculate-profit" class="w-full cta-button bg-orange-600 text-white font-bold py-3 px-6 rounded-lg text-lg">Calcular Ganancias</button>
+                </div>
+                <div class="chart-container w-full max-w-xl mx-auto h-80 md:h-96 relative">
+                    <canvas id="profitChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-16 md:py-24">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h3 class="text-3xl font-bold mb-4">Resultados Reales de Alumnos como Tú</h3>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200">
+                    <p class="text-gray-600 mb-4">"En solo 3 semanas, recuperé la inversión del curso. La lección sobre proveedores privados me abrió los ojos, ¡y ahora mis ganancias se han duplicado!"</p>
+                    <p class="font-bold text-right">- María G.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200">
+                    <p class="text-gray-600 mb-4">"El curso es la mejor inversión que he hecho. Antes no sabía ni por dónde empezar y ahora mis ingresos con Vinted son una realidad. El bot para descripciones me ahorra horas."</p>
+                    <p class="font-bold text-right">- Pedro L.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section id="cta" class="py-16 md:py-24 text-center bg-orange-600 text-white rounded-2xl shadow-2xl">
+            <div class="max-w-3xl mx-auto px-6">
+                <h3 class="text-4xl font-extrabold mb-4">Esta es la Oportunidad que Estabas Buscando</h3>
+                <p class="text-orange-100 mb-8 text-lg">No esperes más. El éxito está a solo un clic de distancia. Toma el control de tu futuro financiero hoy mismo.</p>
+                <a href="#" class="cta-button inline-block bg-white text-orange-600 font-bold py-4 px-12 rounded-lg text-xl shadow-lg">
+                    ¡Quiero Empezar Ahora Mismo!
+                </a>
+                <p class="text-orange-200 mt-4 text-sm">Acceso inmediato. Garantía de satisfacción.</p>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-white mt-16">
+        <div class="container mx-auto px-6 py-6 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 Método 100€/Día. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Course Modules Data & Logic ---
+            const modules = [
+                { title: "Módulo 1: Fundamentos del Revendedor Profesional", content: "Aprende a pensar como un empresario y a manejar la burocracia para proteger tus ganancias." },
+                { title: "Módulo 2: Sourcing Global", content: "Accede a mi guía secreta para negociar y comprar de forma segura en Alibaba y AliExpress." },
+                { title: "Módulo 3: Proveedores Privados y Locales", content: "Descubre cómo encontrar proveedores únicos para tener una ventaja competitiva en tu nicho." },
+                { title: "Módulo 4: Venta en Vinted de Alto Impacto", content: "Domina la fotografía, las descripciones y las estrategias para que tus productos se vendan solos." },
+                { title: "Módulo 5: Escalando a 100€ Diarios", content: "Un plan de acción práctico para crecer rápidamente y automatizar tu negocio con la ayuda de la IA." }
+            ];
+
+            const modulesContainer = document.getElementById('modules-container');
+            modules.forEach((module, index) => {
+                const moduleEl = document.createElement('div');
+                moduleEl.className = 'border border-gray-200 rounded-lg overflow-hidden';
+                moduleEl.innerHTML = `
+                    <button class="module-header w-full text-left p-5 font-semibold flex justify-between items-center transition">
+                        <span>${module.title}</span>
+                        <span class="module-icon text-xl text-orange-600 transform">+</span>
+                    </button>
+                    <div class="module-content hidden p-5 border-t border-gray-200 bg-stone-50">
+                        <p class="text-gray-600">${module.content}</p>
+                    </div>
+                `;
+                modulesContainer.appendChild(moduleEl);
+            });
+
+            modulesContainer.addEventListener('click', (e) => {
+                const header = e.target.closest('.module-header');
+                if (!header) return;
+                
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('.module-icon');
+                const isOpen = !content.classList.contains('hidden');
+
+                // Close all others
+                document.querySelectorAll('.module-content').forEach(mc => {
+                    if (mc !== content) {
+                        mc.classList.add('hidden');
+                        mc.previousElementSibling.querySelector('.module-icon').textContent = '+';
+                         mc.previousElementSibling.querySelector('.module-icon').classList.remove('rotate-45');
+                    }
+                });
+
+                // Toggle current
+                content.classList.toggle('hidden');
+                icon.textContent = isOpen ? '+' : '−';
+                icon.classList.toggle('rotate-45', !isOpen);
+            });
+
+            // --- Profit Calculator Logic ---
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            let profitChart;
+
+            function createOrUpdateChart(data = [0, 0, 0]) {
+                if (profitChart) {
+                    profitChart.data.datasets[0].data = data;
+                    profitChart.update();
+                } else {
+                    profitChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Ganancia Diaria', 'Ganancia Semanal', 'Ganancia Mensual'],
+                            datasets: [{
+                                label: 'Beneficio Neto (€)',
+                                data: data,
+                                backgroundColor: [
+                                    'rgba(255, 159, 64, 0.6)',
+                                    'rgba(54, 162, 235, 0.6)',
+                                    'rgba(75, 192, 192, 0.6)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(75, 192, 192, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) { return '€' + value; }
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return ` Beneficio: €${context.raw.toFixed(2)}`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+            
+            createOrUpdateChart();
+
+            document.getElementById('calculate-profit').addEventListener('click', () => {
+                const cost = parseFloat(document.getElementById('costo').value) || 0;
+                const salePrice = parseFloat(document.getElementById('venta').value) || 0;
+                const salesPerDay = 5;
+
+                if (salePrice <= cost) {
+                    alert("El precio de venta debe ser mayor que el coste.");
+                    return;
+                }
+
+                const dailyProfit = (salePrice - cost) * salesPerDay;
+                const weeklyProfit = dailyProfit * 7;
+                const monthlyProfit = dailyProfit * 30;
+
+                createOrUpdateChart([dailyProfit.toFixed(2), weeklyProfit.toFixed(2), monthlyProfit.toFixed(2)]);
+            });
+        });
+
+        // --- Bot Demo Logic ---
+        const botResponses = {
+            description: `> Generando descripción para "Zapatillas Blancas Casual"...
+
+        **Título:** Zapatillas Blancas Casual - Estilo Urbano Talla 42
+
+        **Descripción:**
+        ¡Perfectas para tu día a día! Vendo estas zapatillas blancas de estilo casual, talla 42. Usadas solo un par de veces, están en excelente estado, casi nuevas (ver fotos). Muy cómodas y combinan con todo.
+
+        - Talla: 42
+        - Estado: 9/10 (Excelente)
+        - Color: Blanco
+        - Marca: [Marca Genérica]
+
+        Las vendo porque me quedan un poco justas. ¡No dejes pasar esta oportunidad!`,
+            market: `> Analizando nichos de mercado con potencial...
+
+        **Nichos con alta demanda y bajo stock actual:**
+
+        1.  **Ropa técnica deportiva vintage:** Chaquetas y cortavientos de marcas como Nike, Adidas, The North Face de los años 90. El margen de beneficio es alto.
+        2.  **Vaqueros de corte específico (Mom-fit, Wide-leg):** Marcas como Levi's, Lee. La demanda es constante.
+        3.  **Bolsos de piel de marcas no lujosas:** Artículos de calidad de marcas como Bimba y Lola, Guess, etc., a buen precio.`,
+            profit: `> Calculando rentabilidad para un producto...
+
+        **Coste del producto:** 5.00€
+        **Precio de venta estimado:** 25.00€
+        **Comisiones Vinted (aprox):** 1.75€ (Protección al comprador + tasa)
+        **Beneficio Neto por venta:** 18.25€
+
+        **Análisis:**
+        ¡Muy rentable! Con un beneficio de 18.25€, solo necesitarías vender 5-6 unidades al día para superar la meta de 100€.`
+        };
+
+        let isTyping = false;
+        function runBotCommand(command) {
+            if (isTyping) return;
+            isTyping = true;
+            
+            const responseEl = document.getElementById('bot-response');
+            const text = botResponses[command];
+            responseEl.textContent = '';
+            responseEl.classList.add('bot-typing');
+            let i = 0;
+
+            const typingInterval = setInterval(() => {
+                if (i < text.length) {
+                    responseEl.textContent += text.charAt(i);
+                    i++;
+                    responseEl.parentElement.scrollTop = responseEl.parentElement.scrollHeight;
+                } else {
+                    clearInterval(typingInterval);
+                    responseEl.classList.remove('bot-typing');
+                    isTyping = false;
+                }
+            }, 20);
+        }
+        
+        // Initial bot message
+        runBotCommand('description');
+    </script>
+</body>
+</html>
